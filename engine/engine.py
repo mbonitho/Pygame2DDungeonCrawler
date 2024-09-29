@@ -16,13 +16,13 @@ from engine.atlasData import AtlasData
 from engine.inputEventKey import InputEventKey
 from engine.map import Map
 from engine.party import Party
-from engine.viewportDimensions import ViewportDimensions
+from engine.viewportSettings import ViewportSettings
 
 class Engine:
 
 	def __init__(self, screen: Surface):
 		self.screenSurface = screen
-		self.viewportDimensions = ViewportDimensions(320, 256)
+		self.viewportSettings = ViewportSettings(320, 256)
 		self.atlasData = None
 		self.atlasTexture = None
 
@@ -237,7 +237,7 @@ class Engine:
 			tile = self.getTileFromAtlas(layerId, "side", x, z)
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
-				tx = self.viewportDimensions.width - tile['screen']['x']
+				tx = self.viewportSettings.width - tile['screen']['x']
 				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
 				# self.draw_texture(txt, Vector2(0,0))
 	
@@ -277,7 +277,7 @@ class Engine:
 			tile = self.getTileFromAtlas(layerId, "side", x, z)
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
-				tx = self.viewportDimensions.width - tile['screen']['x']
+				tx = self.viewportSettings.width - tile['screen']['x']
 				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
 				# self.draw_texture(txt, Vector2(0,0))
 						
@@ -341,12 +341,9 @@ class Engine:
 		
 		# Get the rect of the rotated image
 		if (scale[0] > 0):
-			rect = rotated_image.get_rect(topleft=position)
+			rect = rotated_image.get_rect(topleft=position + self.viewportSettings.offset)
 		else:
-			rect = rotated_image.get_rect(topright=position)
+			rect = rotated_image.get_rect(topright=position  + self.viewportSettings.offset)
 
 		# Draw the transformed image
 		self.screenSurface.blit(rotated_image, rect.topleft)
-
-	# def draw_texture(self, texture: Surface, position: Vector2):
-	# 	self.screenSurface.blit(texture, position)

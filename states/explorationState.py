@@ -11,6 +11,7 @@ class ExplorationState:
     def __init__(self, screen: pygame.Surface) -> None:
         self.screen = screen
         self.engine = Engine(self.screen)
+        self.engine.viewportSettings.offset = pygame.Vector2(50,60)
         self.engine._ready()
         self.lastInputTime = datetime.now()
 
@@ -54,8 +55,17 @@ class ExplorationState:
         self.engine._draw()
 
         # masking anything that is outside the viewport
-        rightRect = pygame.Rect(self.engine.viewportDimensions.width, 
+        self.drawMaskingRectangles()
+
+    def drawMaskingRectangles(self):
+        rightRect = pygame.Rect(self.engine.viewportSettings.width  + self.engine.viewportSettings.offset.x, 
                                 0, 
-                                SCREEN_WIDTH - self.engine.viewportDimensions.width, 
+                                SCREEN_WIDTH - self.engine.viewportSettings.width + self.engine.viewportSettings.offset.x, 
                                 SCREEN_HEIGHT)
         pygame.draw.rect(self.screen, BLACK, rightRect)
+
+        leftRect = pygame.Rect(0, 
+                               0, 
+                               self.engine.viewportSettings.offset.x, 
+                               SCREEN_HEIGHT)
+        pygame.draw.rect(self.screen, BLACK, leftRect)
