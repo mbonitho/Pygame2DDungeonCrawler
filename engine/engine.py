@@ -1,8 +1,9 @@
 #
-# Simple implementation of a 2D dungeon crawler render.
+# Ported to Pygame from zooperdan's simple implementation of a 2D dungeon crawler render :
+# https://github.com/zooperdan/2D-Dungeon-Crawler-Example-in-Godot/blob/main/Main.gd
 # This loads atlases generated using the AtlasMaker (https://github.com/zooperdan/AtlasMaker-for-2D-Dungeon-Crawlers)
 #
-# Written by zooperdan
+# This file's original Godot code was written by zooperdan
 #
 import json
 
