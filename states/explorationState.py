@@ -4,6 +4,8 @@ from engine.engine import Engine
 from engine.inputEventKey import InputEventKey
 from datetime import datetime
 
+from settings.constants import *
+
 class ExplorationState:
 
     def __init__(self, screen: pygame.Surface) -> None:
@@ -50,3 +52,10 @@ class ExplorationState:
 
     def draw(self):
         self.engine._draw()
+
+        # masking anything that is outside the viewport
+        rightRect = pygame.Rect(self.engine.viewportDimensions.width, 
+                                0, 
+                                SCREEN_WIDTH - self.engine.viewportDimensions.width, 
+                                SCREEN_HEIGHT)
+        pygame.draw.rect(self.screen, BLACK, rightRect)

@@ -1,5 +1,5 @@
 
-class ScreenDimensions:
+class ViewportDimensions:
 
     def __init__(self, width: int, height: int):
         self.width = width
