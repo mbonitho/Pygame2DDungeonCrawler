@@ -238,7 +238,7 @@ class Engine:
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
 				tx = self.viewportSettings.width - tile['screen']['x']
-				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1) * self.viewportSettings.zoomlevel)
+				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
 				# self.draw_texture(txt, Vector2(0,0))
 	
 	def drawObject(self, layerId, x, z):
@@ -278,7 +278,7 @@ class Engine:
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
 				tx = self.viewportSettings.width - tile['screen']['x']
-				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1) * self.viewportSettings.zoomlevel)
+				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
 				# self.draw_texture(txt, Vector2(0,0))
 						
 	def drawMapCell(self, x, z):
