@@ -20,9 +20,9 @@ from engine.viewportSettings import ViewportSettings
 
 class Engine:
 
-	def __init__(self, screen: Surface):
+	def __init__(self, screen: Surface, viewportSettings: ViewportSettings):
 		self.screenSurface = screen
-		self.viewportSettings = ViewportSettings(320, 256)
+		self.viewportSettings = viewportSettings
 		self.atlasData = None
 		self.atlasTexture = None
 
@@ -238,7 +238,7 @@ class Engine:
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
 				tx = self.viewportSettings.width - tile['screen']['x']
-				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
+				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1) * self.viewportSettings.zoomlevel)
 				# self.draw_texture(txt, Vector2(0,0))
 	
 	def drawObject(self, layerId, x, z):
@@ -278,7 +278,7 @@ class Engine:
 			if tile:
 				txt = self.get_cropped_texture(self.atlasTexture, Rect(tile['coords']['x'], tile['coords']['y'], tile['coords']['w'], tile['coords']['h']))
 				tx = self.viewportSettings.width - tile['screen']['x']
-				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1))
+				self.draw_set_transform(txt, Vector2(tx, tile['screen']['y']), 0, Vector2(-1,1) * self.viewportSettings.zoomlevel)
 				# self.draw_texture(txt, Vector2(0,0))
 						
 	def drawMapCell(self, x, z):
@@ -329,6 +329,10 @@ class Engine:
 						   position: Vector2, 
 						   rotation: float = 0.0, 
 						   scale: Vector2 = Vector2(1, 1)):
+
+		if self.viewportSettings.zoomlevel > 1:
+			position *= self.viewportSettings.zoomlevel
+			scale *= self.viewportSettings.zoomlevel
 
 		# Flip the image if scale.x or scale.y is negative
 		flipped_image = transform.flip(image, scale[0] < 0, scale[1] < 0)

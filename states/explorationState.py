@@ -4,14 +4,21 @@ from engine.engine import Engine
 from engine.inputEventKey import InputEventKey
 from datetime import datetime
 
+from engine.viewportSettings import ViewportSettings
 from settings.constants import *
 
 class ExplorationState:
 
     def __init__(self, screen: pygame.Surface) -> None:
         self.screen = screen
-        self.engine = Engine(self.screen)
-        self.engine.viewportSettings.offset = pygame.Vector2(50,60)
+
+        settings = ViewportSettings()
+        settings.zoomlevel = 1
+        settings.width = 320 * settings.zoomlevel
+        settings.height = 256 * settings.zoomlevel
+        settings.offset = pygame.Vector2(50,60)
+        self.engine = Engine(self.screen, settings)
+        
         self.engine._ready()
         self.lastInputTime = datetime.now()
 
